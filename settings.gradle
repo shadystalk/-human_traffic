@@ -1,0 +1,6 @@
+
+include ':app_library'
+include ':app'
+rootProject.name = "LS149"
+include ':glhelper'
+

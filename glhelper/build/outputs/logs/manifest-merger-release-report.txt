@@ -1,0 +1,25 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml:1:1-2:50
+INJECTED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml:1:1-2:50
+INJECTED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml:1:1-2:50
+	package
+		ADDED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml:2:5-47
+		INJECTED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml
+		INJECTED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml:1:11-69
+uses-sdk
+INJECTED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml
+INJECTED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml
+INJECTED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml
+INJECTED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml
+		ADDED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml
+		INJECTED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml
+		ADDED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml
+		INJECTED from D:\FY\ShrfidProject\ls147_camera\ls149\glhelper\src\main\AndroidManifest.xml

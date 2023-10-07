@@ -1,0 +1,121 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+
+    useLibrary 'org.apache.http.legacy'
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "USE_CANARY", "false"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            multiDexKeepProguard file('multidex-config.pro')
+        }
+
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "USE_CANARY", "false"
+            minifyEnabled false
+//            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            multiDexKeepProguard file('multidex-config.pro')
+        }
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+        disable "ResourceType"
+        abortOnError false
+    }
+
+    subprojects {
+        afterEvaluate {
+            android {
+                resourcePrefix "${project.name}_"
+            }
+        }
+    }
+
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        api 'me.jessyan:arms:2.5.2'
+        api 'me.jessyan:arms-imageloader-glide:2.5.2'
+
+        //view
+        //api rootProject.ext.dependencies["autosize"]
+
+        kapt rootProject.ext.dependencies["dagger2-compiler"]
+        kapt rootProject.ext.dependencies["arouter-compiler"]
+
+
+        api(rootProject.ext.dependencies["arouter"]) {
+            exclude group: 'com.android.support'
+        }
+        //注意 Arms 核心库现在并不会依赖某个 EventBus, 要想使用 EventBus, 还请在项目中自行依赖对应的 EventBus
+        //现在支持两种 EventBus, greenrobot 的 EventBus 和畅销书 《Android源码设计模式解析与实战》的作者 何红辉 所作的 AndroidEventBus
+        //依赖后 Arms 会自动检测您依赖的 EventBus 并自动注册
+        //建议使用 AndroidEventBus, 特别是组件化项目, 原因请看 https://github.com/hehonghui/AndroidEventBus/issues/49
+        //这种做法可以让使用者有自行选择三方库的权利, 并且还可以减轻 Arms 的体积
+        api rootProject.ext.dependencies["androideventbus"]
+
+
+        api('com.github.GrenderG:Toasty:1.4.2') {
+            exclude module: 'support-annotations'
+            exclude group: 'com.android.support'
+        }
+
+        api('com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4') {
+            exclude module: 'support-annotations'
+            exclude group: 'com.android.support'
+        }
+
+        api('com.scwang.smartrefresh:SmartRefreshLayout:1.1.0') {
+            exclude group: 'com.android.support'
+        }
+        api 'me.jessyan:retrofit-url-manager:1.4.0'
+
+        //状态栏
+        api 'com.jaeger.statusbarutil:library:1.5.1'
+
+        api 'com.zyao89:zloading:1.2.0'
+
+        api 'androidx.multidex:multidex:2.0.1'
+
+        //解决代码报红
+        api "androidx.activity:activity-ktx:1.2.0-beta01"
+
+        //状态栏
+        api 'com.gyf.immersionbar:immersionbar:3.0.0'
+
+    }
+    repositories {
+        mavenCentral()
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+

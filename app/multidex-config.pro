@@ -1,0 +1,2 @@
+-keep class com.shrifd.ls149.app.GlobalConfiguration
+-keep class com.wan.commonsdk.app.GlobalConfiguration
