@@ -258,38 +258,4 @@ Java_com_shrifd_ls149_detect_InferenceWrapper_native_1run(JNIEnv *env, jobject t
 
 }
 
-extern "C"
-JNIEXPORT jobject  JNICALL
-Java_com_shrifd_ls149_detect_InferenceWrapper_capture(JNIEnv *env, jobject thiz, jint width,
-                                                      jint height) {
-
-
-    Yolov5Detector::CacheMat cacheMat = Yolov5Detector::lock_capture();
-    if (cacheMat.max_prob != 0) {
-        jclass bitmapCls = env->FindClass("android/graphics/Bitmap");
-        jmethodID createBitmapFunction = env->GetStaticMethodID(bitmapCls,
-                                                                "createBitmap",
-                                                                "(IILandroid/graphics/Bitmap$Config;)Landroid/graphics/Bitmap;");
-        jstring configName = charToJString(env, "ARGB_8888");
-        jclass bitmapConfigClass = env->FindClass("android/graphics/Bitmap$Config");
-        jmethodID valueOfBitmapConfigFunction = env->GetStaticMethodID(
-                bitmapConfigClass, "valueOf",
-                "(Ljava/lang/String;)Landroid/graphics/Bitmap$Config;");
-
-        jobject bitmapConfig = env->CallStaticObjectMethod(bitmapConfigClass,
-                                                           valueOfBitmapConfigFunction, configName);
-
-        jobject newBitmap = env->CallStaticObjectMethod(bitmapCls,
-                                                        createBitmapFunction,
-                                                        width, height, bitmapConfig);
-        int result = mat2Bitmap(env, cacheMat.mat, newBitmap, false);
-        LOGD("Yolov5Detector::CacheMat mat2Bitmap result： %d", result);
-        if (result == 0) {
-            Yolov5Detector::unlock_capture();
-            return newBitmap;
-        }
-    }
-    Yolov5Detector::unlock_capture();
-    return nullptr;
-}
 

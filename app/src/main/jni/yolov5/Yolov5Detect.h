@@ -38,11 +38,6 @@ namespace Yolov5Detector {
         float max_prob; //最大分
     };
 
-    CacheMat lock_capture();
-
-    void unlock_capture();
-
-
     void
     yolov5create(int width, int height, const std::string &modelDir, const std::string &labelPath,
                  const std::string &reIdModelDir);

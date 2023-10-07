@@ -66,8 +66,6 @@ public class InferenceWrapper {
      * */
     private native Obj[] native_run(int textureId);
 
-    public native Bitmap capture( int width,int height);
-
     private static native int native_create_direct_texture(int texWidth, int texHeight, int format);
 
     private static native boolean native_delete_direct_texture(int texId);

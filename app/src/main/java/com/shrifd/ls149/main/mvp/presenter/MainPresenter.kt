@@ -40,8 +40,6 @@ class MainPresenter
 constructor(val model: MainContract.Model, var rootView: MainContract.View) :
     BaseActivityPresenter(model, rootView) {
 
-    lateinit var timeDisposable: Disposable
-
     private var flowPeople: FlowPeople? = null
 
     private lateinit var mTrackResultBitmap: Bitmap
@@ -85,7 +83,6 @@ constructor(val model: MainContract.Model, var rootView: MainContract.View) :
         super.onCreate()
         //初始化摄像头
         initGl()
-
     }
 
     /**

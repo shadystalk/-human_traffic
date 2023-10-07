@@ -305,20 +305,6 @@ namespace Yolov5Detector {
                     detect_result_group.count++;
                 }
             }
-
-            if (detect_result_group.count > 0 && !is_capture && is_exist_best_mat) {
-                //只保留最近的15张居中，评分高的图片
-                if (picture_cache.size() >= 15) {
-                    picture_cache.pop();
-                }
-                CacheMat cacheMat;
-                cacheMat.time = GetCurrentTime();
-                cacheMat.mat = temp_mat_copy;
-                cacheMat.max_prob = mat_max_prob;
-                picture_cache.push(cacheMat);
-                LOGE("FeatureTensor  cacheMat push");
-
-            }
         }
 
 //        reidTime = GetElapsedTime(t);
@@ -326,33 +312,6 @@ namespace Yolov5Detector {
         return detect_result_group;
     }
 
-    CacheMat lock_capture() {
-        //防止线程不安全，所以在抓拍时，不会在队列里面放入图片
-        is_capture = true;
-        CacheMat init_mat;
-        init_mat.max_prob = 0;
-        CacheMat *best_mat = &init_mat;
-        while (!picture_cache.empty()) {
-            //取出队列第一个放进去的元素
-            CacheMat next_cache_mat = picture_cache.front();
-            //获取该图片的时间差
-            double c = GetElapsedTime(next_cache_mat.time);
-            //LOGD("Yolov5Detector::CacheMat  next_cache_mat c:  %f", c);
-            //LOGD("Yolov5Detector::CacheMat  next_cache_mat mat_prob:  %f", next_cache_mat.max_prob);
-            //如果该图片的置信度比栈里面的高，并且是5秒以内的图片
-            if (next_cache_mat.max_prob > best_mat->max_prob && c < 5000) {
-                *best_mat = next_cache_mat;
-            }
-            //队列移除这个元素
-            picture_cache.pop();
-        }
-        LOGD("Yolov5Detector::CacheMat  best_mat mat_prob:  %f", best_mat->max_prob);
-        return *best_mat;
-    }
-
-    void unlock_capture() {
-        is_capture = false;
-    }
 
     void yolov5Destory() {
         rknn_destroy(yolov5_ctx);
